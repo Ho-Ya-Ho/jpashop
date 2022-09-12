@@ -1,3 +1,3 @@
 # jpashop
 
-Springboot, Jpa 학습 
+Springboot, JPA 학습 
