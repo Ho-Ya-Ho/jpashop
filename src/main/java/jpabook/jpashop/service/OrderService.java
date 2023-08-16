@@ -5,11 +5,13 @@ import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.dto.OrderSearch;
 import jpabook.jpashop.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,7 +46,8 @@ public class OrderService {
         order.ifPresent(Order::cancel);
     }
 
-//    public List<Order> findOrders(OrderSearch orderSearch) {
-//        return orderRepository.findAllByCriteria(orderSearch);
-//    }
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        //TODO 아래 코드 동적으로 리스트 불러오도록 수정
+        return orderRepository.findAll(orderSearch);
+    }
 }
