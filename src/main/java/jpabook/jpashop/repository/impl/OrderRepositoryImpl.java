@@ -4,11 +4,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
-import jpabook.jpashop.domain.QMember;
-import jpabook.jpashop.domain.QOrder;
 import jpabook.jpashop.dto.OrderSearch;
 import jpabook.jpashop.repository.OrderRepositoryCustom;
-import lombok.RequiredArgsConstructor;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -46,6 +43,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         if (!StringUtils.hasText(memberName)) {
             return null;
         }
-        return member.name.like(memberName);
+        return member.name.contains(memberName);
     }
 }

@@ -47,7 +47,6 @@ public class OrderService {
     }
 
     public List<Order> findOrders(OrderSearch orderSearch) {
-        //TODO 아래 코드 동적으로 리스트 불러오도록 수정
         return orderRepository.findAll(orderSearch);
     }
 }
