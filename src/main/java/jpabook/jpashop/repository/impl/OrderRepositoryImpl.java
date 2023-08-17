@@ -9,9 +9,13 @@ import jpabook.jpashop.domain.QOrder;
 import jpabook.jpashop.dto.OrderSearch;
 import jpabook.jpashop.repository.OrderRepositoryCustom;
 import lombok.RequiredArgsConstructor;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+
+import static jpabook.jpashop.domain.QMember.*;
+import static jpabook.jpashop.domain.QOrder.*;
 
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
@@ -23,10 +27,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
     @Override
     public List<Order> findAll(OrderSearch orderSearch) {
-
-        QOrder order = QOrder.order;
-        QMember member = QMember.member;
-
         return query.select(order)
                 .from(order)
                 .join(order.member, member)
@@ -39,13 +39,13 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         if (statusEq == null) {
             return null;
         }
-        return QOrder.order.status.eq(statusEq);
+        return order.status.eq(statusEq);
     }
 
     private BooleanExpression nameLike(String memberName) {
-        if (memberName == null) {
+        if (!StringUtils.hasText(memberName)) {
             return null;
         }
-        return QMember.member.name.like(memberName);
+        return member.name.like(memberName);
     }
 }
