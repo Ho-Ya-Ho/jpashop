@@ -12,4 +12,8 @@ public interface OrderRepositoryCustom {
     List<Order> findAllByV3Querydsl();
 
     List<OrderSimpleQueryDto> findAllByV4Querydsl();
+
+    List<Order> findAllWithMemberDelivery(int offset, int limit);
+
+    List<Order> findAllWithItem();
 }

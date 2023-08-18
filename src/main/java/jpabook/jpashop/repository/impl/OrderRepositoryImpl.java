@@ -19,10 +19,12 @@ import static jpabook.jpashop.domain.QOrder.*;
 
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
 
+    private final EntityManager em;
     private final JPAQueryFactory query;
 
     public OrderRepositoryImpl(EntityManager em) {
         this.query = new JPAQueryFactory(em);
+        this.em = em;
     }
 
     @Override
@@ -41,6 +43,28 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .join(order.member, member)
                 .join(order.delivery, delivery)
                 .fetch();
+    }
+
+    @Override
+    public List<Order> findAllWithMemberDelivery(int offset, int limit) {
+        return em.createQuery(
+                        "select o from Order o" +
+                                " join fetch o.member m" +
+                                " join fetch o.delivery d", Order.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit)
+                .getResultList();
+    }
+
+    @Override
+    public List<Order> findAllWithItem() {
+        return em.createQuery(
+                "select distinct o from Order o" +
+                        " join fetch o.member m" +
+                        " join fetch o.delivery d" +
+                        " join fetch o.orderItems oi" +
+                        " join fetch oi.item i", Order.class)
+                .getResultList();
     }
 
     @Override
